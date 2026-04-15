@@ -1,0 +1,21 @@
+mixed-port: 7890
+allow-lan: true
+mode: global
+log-level: info
+
+proxies:
+  - name: "TikTok-US-ISP"
+    type: http
+    server: brd.superproxy.io
+    port: 33335
+    username: brd-customer-hl_4845f3f9-zone-isp_proxy1
+    password: "yangjieke0203@@0"
+
+proxy-groups:
+  - name: "Proxy"
+    type: select
+    proxies:
+      - "TikTok-US-ISP"
+
+rules:
+  - MATCH,Proxy
