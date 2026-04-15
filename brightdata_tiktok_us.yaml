@@ -1,10 +1,19 @@
-mixed-port: 7890
+port: 7890
+socks-port: 7891
 allow-lan: true
-mode: global
+mode: Rule
 log-level: info
 
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+
 proxies:
-  - name: "TikTok-US-ISP"
+  - name: TikTok-US-ISP
     type: http
     server: brd.superproxy.io
     port: 33335
@@ -12,10 +21,28 @@ proxies:
     password: "yangjieke0203@@0"
 
 proxy-groups:
-  - name: "Proxy"
+  - name: 🚀 节点选择
     type: select
     proxies:
-      - "TikTok-US-ISP"
+      - TikTok-US-ISP
+      - DIRECT
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - TikTok-US-ISP
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - TikTok-US-ISP
+      - DIRECT
 
 rules:
-  - MATCH,Proxy
+  - DOMAIN-SUFFIX,tiktok.com,🚀 节点选择
+  - DOMAIN-SUFFIX,tiktokcdn.com,🚀 节点选择
+  - DOMAIN-SUFFIX,byteoversea.com,🚀 节点选择
+  - DOMAIN-SUFFIX,ibytedtos.com,🚀 节点选择
+  - DOMAIN-SUFFIX,muscdn.com,🚀 节点选择
+  - MATCH,🐟 漏网之鱼
